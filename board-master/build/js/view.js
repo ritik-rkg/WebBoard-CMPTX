@@ -1,0 +1,1 @@
+function sessionLoad(e){(e=JSON.parse(e)).__proto__=sessionObject.prototype;for(var o=0;o<e.pages.length;o++){e.pages[o].__proto__=Page.prototype;for(var s=0;s<e.pages[o].strokeList.length;s++)e.pages[o].strokeList[s].__proto__=strokeList[e.pages[o].strokeList[s].type].prototype}boardArea.currentPageIndex=0,boardArea.focus_page=0,sessionObject=e,render()}
