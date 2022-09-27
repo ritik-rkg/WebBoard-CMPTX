@@ -1,5 +1,5 @@
-from flask import Flask, send_file, request, render_template
-#from flask_cors import CORS, cross_origin
+from flask import Flask, send_file, request , render_template
+from flask_cors import CORS, cross_origin
 import os
 
 app = Flask(__name__)
@@ -10,16 +10,17 @@ app.config['SECRET_KEY'] = '123'
 
 @app.after_request
 def creds(response):
-    response.headers['Access-Control-Allow-Origin'] = 'http://webboard.iiitb.ac.in'
+    # http://webboard.iiitb.ac.in
+    response.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:5000'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
-    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token, cache-control, postman-token'
     return response
 
 @app.route("/", methods=["GET"])
 def home():
     return "The website is working"
 
-@app.route('/convert', methods=["GET"])
+@app.route('/convert', methods=["GET", "POST"])
 #@cross_origin(supports_credentials=True)
 def convert():
     form = request.form
@@ -36,4 +37,4 @@ def convert():
     return send_file('/home/administrator/'+file_name_extention[0]+".pdf", attachment_filename=file_name_extention[0]+".pdf")
 
 if __name__ == '__main__':
-  app.run(debug=True, host="0.0.0.0")
+  app.run(debug=True, host="0.0.0.0", port="5001")

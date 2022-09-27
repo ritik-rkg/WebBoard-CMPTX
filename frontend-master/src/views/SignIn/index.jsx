@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { login, loginClear } from 'actions/loginAction';
+import { Link, withRouter,Redirect } from 'react-router-dom';
+import {connect} from 'react-redux'
+import {login,loginClear} from 'actions/loginAction';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -42,22 +42,6 @@ const signIn = () => {
     }, 1500);
   });
 };
-
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
-    );
-  }
-
-  return ComponentWithRouterProp;
-}
 
 class SignIn extends Component {
   state = {
@@ -108,7 +92,7 @@ class SignIn extends Component {
 
   handleSignIn = () => {
     const { values } = this.state;
-    this.props.login(values.email, values.password);
+    this.props.login(values.email,values.password);
   };
 
   // componentWillMount(){
@@ -121,17 +105,17 @@ class SignIn extends Component {
       values,
       touched,
       errors,
-      isValid,
+      isValid,      
     } = this.state;
 
     const showEmailError = touched.email && errors.email;
     const showPasswordError = touched.password && errors.password;
     // console.log(document.cookie,"yayaya",errorMsg);
-    if (this.props.status == 200 || localStorage.getItem("isAuthenticated") == "true") {
+    if(this.props.status == 200 || localStorage.getItem("isAuthenticated") == "true"){
       localStorage.setItem('isAuthenticated', true);
       // this.props.history.push('/dashboard');
-      return (
-        <Navigate to="/dashboard" />
+      return(
+        <Redirect to="/dashboard" />
       )
     }
 
@@ -318,24 +302,24 @@ SignIn.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (email, password) => dispatch(login(email, password)),
-    loginClear: () => dispatch(loginClear()),
+      login : (email,password) => dispatch(login(email,password)),
+      loginClear : () => dispatch(loginClear()),
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     //  info: state.dashboard.info,
-    isLoading: state.login.isLoading,
-    hasErrored: state.login.hasErrored,
-    status: state.login.status,
-    errorMsg: state.login.errorMsg
+     isLoading : state.login.isLoading,
+     hasErrored : state.login.hasErrored,
+     status: state.login.status,
+     errorMsg: state.login.errorMsg
   }
 }
 
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps,mapDispatchToProps),
   withStyles(styles)
 )(SignIn);

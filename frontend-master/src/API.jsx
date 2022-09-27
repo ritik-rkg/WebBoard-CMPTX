@@ -1,19 +1,22 @@
 import axios from "axios";
 
 var apivar = axios.create({
-  // baseURL: "http://127.0.0.1:5000",
+  baseURL: "http://127.0.0.1:5000",
   // baseURL: "http://192.168.1.5:5000",
-  baseURL: "https://app.webboard.in/api",
-  // responseType: "json",
+  // baseURL: "https://app.webboard.in/api",
+  responseType: "json",
   withCredentials: true,
   validateStatus: function (status) {
     return status >= 200 && status < 300; // default
-  }
+  },
+  headers: {
+      'Content-Type': 'application/json',
+  },
 });
 
-apivar.defaults.headers.common = {
-  "Content-Type": "application/json"
-}
+// apivar.defaults.headers.common = {
+//   'Content-Type': 'application/json',
+// }
 
 //These are the backend/API routes and *not* frontend routes
 

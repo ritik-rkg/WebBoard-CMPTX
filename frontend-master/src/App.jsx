@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Router } from 'react-router-dom';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import { createBrowserHistory } from 'history';
 
 // Externals
@@ -34,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <Router navigator={browserHistory}>
+        <Router history={browserHistory}>
           <Routes />
         </Router>
       </ThemeProvider>

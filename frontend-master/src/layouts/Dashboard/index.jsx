@@ -12,10 +12,10 @@ import { Drawer } from '@material-ui/core';
 import { Sidebar, Topbar, Footer } from './components';
 // Component styles
 import styles from './styles';
-import { getUserInfo } from 'actions/dashboardAction';
-import { connect } from 'react-redux'
+import {getUserInfo} from 'actions/dashboardAction';
+import {connect} from 'react-redux'
 // import Redirector from 'Redirector';
-import { Navigate } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Loader from 'components/Loader'
 
 
@@ -29,7 +29,7 @@ class Dashboard extends Component {
     const isMobile = ['xs', 'sm', 'md'].includes(props.width);
 
     this.state = {
-      isOpen: !isMobile,
+      isOpen : !isMobile,
     };
   }
 
@@ -43,7 +43,7 @@ class Dashboard extends Component {
     }));
   };
 
-  componentWillMount() {
+  componentWillMount(){
     this.props.getUserInfo();
   }
 
@@ -59,54 +59,54 @@ class Dashboard extends Component {
     const shiftTopbar = isOpen && !isMobile;
     const shiftContent = isOpen && !isMobile;
 
-    if (hasErrored || localStorage.getItem("isAuthenticated") != "true") {
-      if (status !== 100) {
-        return <Navigate to="/not-found" />
+    if(hasErrored || localStorage.getItem("isAuthenticated") != "true"){
+      if(status !== 100) {
+        return <Redirect to="/not-found" />
       }
-
-      else {
-        return (
-          <Navigate to="/not-found" />
+      
+      else{
+        return(
+          <Redirect to="/not-found" />
         )
       }
     }
-
-    if (isLoading) {
-      return (
+    
+    if(isLoading){
+      return(
         <Fragment>
-          <Topbar
-            className={classNames(classes.topbar, {
-              [classes.topbarShift]: shiftTopbar
-            })}
-            isSidebarOpen={isOpen}
-            onToggleSidebar={this.handleToggleOpen}
-            title={title}
-          />
-          <Drawer
-            anchor="left"
-            classes={{ paper: classes.drawerPaper }}
-            onClose={this.handleClose}
-            open={isOpen}
-            variant={isMobile ? 'temporary' : 'persistent'}
-          >
-            {info && <Sidebar
-              className={classes.sidebar}
-              // fullname={"TEST"}
-              fullname={info.username}
-              // username={"test"} 
-              username={info.name}
-            />}
-          </Drawer>
-          <main
-            className={classNames(classes.content, {
-              [classes.contentShift]: shiftContent
-            })}
-          >
-            <Loader />
-            <Footer />
-          </main>
-        </Fragment>
-
+        <Topbar
+          className={classNames(classes.topbar, {
+            [classes.topbarShift]: shiftTopbar
+          })}
+          isSidebarOpen={isOpen}
+          onToggleSidebar={this.handleToggleOpen}
+          title={title}
+        />
+        <Drawer
+          anchor="left"
+          classes={{ paper: classes.drawerPaper }}
+          onClose={this.handleClose}
+          open={isOpen}
+          variant={isMobile ? 'temporary' : 'persistent'}
+        >
+          {info && <Sidebar 
+            className={classes.sidebar} 
+            // fullname={"TEST"}
+            fullname={info.username}
+            // username={"test"} 
+            username={info.name} 
+          />}
+        </Drawer>
+        <main
+          className={classNames(classes.content, {
+            [classes.contentShift]: shiftContent
+          })}
+        >
+          <Loader />
+          <Footer />
+        </main>
+      </Fragment>
+        
       )
     }
     return (
@@ -126,12 +126,12 @@ class Dashboard extends Component {
           open={isOpen}
           variant={isMobile ? 'temporary' : 'persistent'}
         >
-          {info && <Sidebar
-            className={classes.sidebar}
+          {info && <Sidebar 
+            className={classes.sidebar} 
             // fullname={"TEST"}
             fullname={info.username}
             // username={"test"} 
-            username={info.name}
+            username={info.name} 
           />}
         </Drawer>
         <main
@@ -157,22 +157,22 @@ Dashboard.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserInfo: () => dispatch(getUserInfo()),
+      getUserInfo : () => dispatch(getUserInfo()),
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    info: state.dashboard.info,
-    isLoading: state.dashboard.isLoading,
-    hasErrored: state.dashboard.hasErrored,
-    status: state.dashboard.status
+     info: state.dashboard.info,
+     isLoading : state.dashboard.isLoading,
+     hasErrored : state.dashboard.hasErrored,
+     status: state.dashboard.status
   }
 }
 
 export default compose(
   withStyles(styles),
   withWidth(),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps,mapDispatchToProps)
 )(Dashboard);
 

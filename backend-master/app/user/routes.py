@@ -7,20 +7,19 @@ from app.user.controller import user_sign_up, user_sign_in, user_email_verificat
     get_user_details
 
 user = Blueprint('user', __name__)
-# ! works 
+
 @user.route('/sign_up', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def sign_up():
     try:
-        '''
-        data = {
-            "username": "abc",
-            "name": "abc abc",
-            "email": "abc@gmail.com",
-            "password" : "abcabc"
-        }
-        '''
-
+        
+        # data = {
+        #     "username": "abcd",
+        #     "name": "abc abcw",
+        #     "email": "abcw@gmail.com",
+        #     "password" : "abcabc"
+        # }
+        # this is failing
         data = request.json
         if data:
             return user_sign_up(data)
@@ -36,7 +35,7 @@ def sign_up():
             response=json.dumps({'error': str(e)}),
             status=400
         )
-# ! works
+
 @user.route('/sign_in', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def sign_in():
@@ -63,7 +62,7 @@ def sign_in():
             status=400
         )
 
-# ! till details - pending
+
 @user.route('/sign_out', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def sign_out():
@@ -82,12 +81,12 @@ def reset_password():
     pass
 
 @user.route('/details', methods=["GET", "POST"])
-@cross_origin(supports_credentials=True)
+@cross_origin(supports_credentials=True)  #not working
 def user_details():
     try:
-        print ("=-"*80)
-        print (request.cookies)
-        print("=-"*80)
+        # print ("=-"*80)
+        # # print (request.cookies)
+        # print("=-"*80)
         if(request.method == 'POST'):
             data = request.json
             if data:
@@ -106,7 +105,7 @@ def user_details():
             status=400
         )
     
-# ! tells that token does not match
+
 @user.route('/email_verification/<token>', methods=["GET"])
 def email_verification(token):
     try:
@@ -117,7 +116,4 @@ def email_verification(token):
             response=json.dumps({'error': str(e)}),
             status=400
         )
-
-
-
 

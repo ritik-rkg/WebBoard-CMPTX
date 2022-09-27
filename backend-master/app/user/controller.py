@@ -26,8 +26,13 @@ def user_sign_up(data):
             email=data["email"],
             password=password_hash
         )
-        new_user.save()
         
+        new_user.save()
+        return Response(
+                mimetype="application/json",
+                response=json.dumps({'success': 'User created Successfully'}),
+                status=201
+            )
         # # Now we'll send the email confirmation link
         # subject = "Confirm your email"
 
@@ -44,12 +49,6 @@ def user_sign_up(data):
 
         # # We'll assume that send_email has been defined in myapp/util.py
         # send_email(user.email, subject, html)
-
-        return Response(
-            mimetype="application/json",
-            response=json.dumps({'success': "User created successfully"}),
-            status=201
-        )
     except Exception as e:
         return Response(
             mimetype="application/json",
@@ -67,8 +66,7 @@ def user_sign_in(data):
             }
             res = make_response(json.dumps(data))
             token = Auth.generate_token(user.id)
-            print (token)
-            res.set_cookie(key="session", value=token, domain=".webboard.in", max_age=None, samesite='Strict', secure=True )
+            res.set_cookie(key="session", value=token, max_age=None, samesite='Strict', secure=True )
             return  res, 200, {'Content-Type': 'application/json'}# ask arvind what all data does he require after sign_in
             # return res
         else:

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { withRouter ,Link} from 'react-router-dom';
 
 // Externals
 import classNames from 'classnames';
@@ -41,22 +41,6 @@ import { NotificationList } from './components';
 // Component styles
 import styles from './styles';
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
-    );
-  }
-
-  return ComponentWithRouterProp;
-}
-
 class Topbar extends Component {
   signal = true;
 
@@ -65,7 +49,7 @@ class Topbar extends Component {
     notificationsLimit: 4,
     notificationsCount: 0,
     notificationsEl: null,
-    menuOpen: false
+    menuOpen:false
   };
 
   async getNotifications() {
@@ -115,10 +99,10 @@ class Topbar extends Component {
     });
   };
   menuOpen = (event) => {
-    this.setState({ menuOpen: event.currentTarget });
+    this.setState({menuOpen : event.currentTarget});
   };
   menuClose = () => {
-    this.setState({ menuOpen: null });
+    this.setState({menuOpen : null});
   };
 
   render() {
@@ -162,47 +146,47 @@ class Topbar extends Component {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-
+            
             <Button
               className={classes.signOutButton}
-            // onClick={this.handleSignOut}
+              // onClick={this.handleSignOut}
             >
               Explore
             </Button>
             <Button
               className={classes.signOutButton}
-            // onClick={this.handleSignOut}
+              // onClick={this.handleSignOut}
             >
-              Create <Icon style={{ fontSize: 15 }}>add</Icon>
+              Create <Icon style={{fontSize:15}}>add</Icon>
             </Button>
             <IconButton onClick={this.menuOpen} aria-controls="simple-menu" aria-haspopup="true" >
-              <Avatar alt="User" src="/images/avatars/avatar_1.png" style={{ margin: 0 }} />
+            <Avatar alt="User" src="/images/avatars/avatar_1.png" style={{margin:0}} />
             </IconButton>
             <Menu
-              id="menu-appbar"
-              anchorEl={this.state.menuOpen}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(this.state.menuOpen)}
-              onClose={this.menuClose}
-            >
-              <MenuItem onClick={this.menuClose}>Profile</MenuItem>
-              {/* <MenuItem onClick={this.menuClose}>Your Courses</MenuItem> */}
-              <Link to="/course"><MenuItem onClick={this.menuClose}>Your Boards</MenuItem></Link>
-              {/* <MenuItem onClick={this.menuClose}>Your Followers</MenuItem> */}
-              <Link to="/settings"><MenuItem onClick={this.menuClose}>Settings</MenuItem></Link>
-              <MenuItem onClick={this.menuClose}>Help</MenuItem>
-              <Divider className={classes.listDivider} />
-              <Link to="/sign-out"><MenuItem onClick={this.menuClose}>Logout</MenuItem></Link>
-              {/* <MenuItem onClick={this.handleSignOut}>Logout</MenuItem> */}
-            </Menu>
+                id="menu-appbar"
+                anchorEl={this.state.menuOpen}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(this.state.menuOpen)}
+                onClose={this.menuClose}
+              >
+                <MenuItem onClick={this.menuClose}>Profile</MenuItem>
+                {/* <MenuItem onClick={this.menuClose}>Your Courses</MenuItem> */}
+                <Link to="/course"><MenuItem onClick={this.menuClose}>Your Boards</MenuItem></Link>
+                {/* <MenuItem onClick={this.menuClose}>Your Followers</MenuItem> */}
+                <Link to="/settings"><MenuItem onClick={this.menuClose}>Settings</MenuItem></Link>
+                <MenuItem onClick={this.menuClose}>Help</MenuItem>
+                <Divider className={classes.listDivider} />
+                <Link to="/sign-out"><MenuItem onClick={this.menuClose}>Logout</MenuItem></Link>
+                {/* <MenuItem onClick={this.handleSignOut}>Logout</MenuItem> */}
+              </Menu>
           </Toolbar>
         </div>
         <Popover
@@ -238,7 +222,7 @@ Topbar.propTypes = {
 };
 
 Topbar.defaultProps = {
-  onToggleSidebar: () => { }
+  onToggleSidebar: () => {}
 };
 
 export default compose(
