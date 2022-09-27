@@ -53,7 +53,7 @@ export function signupErrored(bool, stat, message) {
 export function signupSuccess(stat) {
   return {
     type: SIGNUP_SUCCESS,
-    //   info: data,
+      // info: data,
     status: stat
   };
 }

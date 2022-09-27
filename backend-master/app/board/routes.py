@@ -12,7 +12,7 @@ board = Blueprint('board', __name__)
 def user_details():
     try:
         print ("=-"*80)
-        print ("request.cookies",request.cookies)
+        print (request.cookies)
         print("=-"*80)
         if(request.method == 'POST'):
             data = request.json

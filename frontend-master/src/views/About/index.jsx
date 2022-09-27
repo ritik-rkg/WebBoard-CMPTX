@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 // import PropTypes from 'prop-types';
 // import compose from 'recompose/compose';
 // import validate from 'validate.js';
-import _ from 'underscore';
+// import _ from 'underscore';
 
 // Material helpers
 import { withStyles } from '@material-ui/core';
@@ -29,7 +29,7 @@ import styles from './styles';
 class About extends Component {
   render() {
     const { classes } = this.props;
-
+    console.log(classes);
     return (
       <div className={classes.root}>
         <Helmet>

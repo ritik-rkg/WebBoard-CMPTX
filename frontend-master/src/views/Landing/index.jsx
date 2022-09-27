@@ -46,7 +46,7 @@ class Landing extends Component {
                     size="large"
                     color="primary"
                     className={classes.bannerButton}
-                    href="https://app.webboard.in">
+                    href="http://127.0.0.1:5000/">
                     Start Writing
                   </Button>
                   <Button

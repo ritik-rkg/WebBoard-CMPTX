@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -9,8 +9,8 @@ import _ from 'underscore';
 
 // Material helpers
 import { withStyles } from '@material-ui/core';
-import { signup, signupClear } from 'actions/signupAction';
-import { connect } from 'react-redux'
+import {signup,signupClear} from 'actions/signupAction';
+import {connect} from 'react-redux'
 
 // Material components
 import {
@@ -45,22 +45,6 @@ validate.validators.checked = validators.checked;
 //     }, 1500);
 //   });
 // };
-
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    let location = useLocation();
-    let navigate = useNavigate();
-    let params = useParams();
-    return (
-      <Component
-        {...props}
-        router={{ location, navigate, params }}
-      />
-    );
-  }
-
-  return ComponentWithRouterProp;
-}
 
 class SignUp extends Component {
   state = {
@@ -118,13 +102,13 @@ class SignUp extends Component {
     this.setState(newState, this.validateForm);
   };
 
-  componentWillUnmount() {
+  componentWillUnmount(){
     this.props.signupClear();
   }
 
   handleSignUp = () => {
     const { values } = this.state;
-    this.props.signup(values.username, values.fullname, values.email, values.password);
+    this.props.signup(values.username,values.fullname,values.email,values.password);
   }
 
   render() {
@@ -149,9 +133,9 @@ class SignUp extends Component {
     const showPolicyError =
       touched.policy && errors.policy ? errors.policy[0] : false;
 
-    if (this.props.status == 200 || localStorage.getItem("isAuthenticated") == "true") {
-      localStorage.setItem('isAuthenticated', true);
-      this.props.history.push('/dashboard');
+    if(this.props.status == 200 || localStorage.getItem("isAuthenticated") == "true"){
+        localStorage.setItem('isAuthenticated', true);
+        this.props.history.push('/dashboard');
     }
 
     return (
@@ -330,12 +314,14 @@ class SignUp extends Component {
                       className={classes.submitError}
                       variant="body2"
                     >
-                      {this.props.errorMsg}
+                     {this.props.errorMsg}
                     </Typography>
                   )}
                   {this.props.isLoading ? (
                     <CircularProgress className={classes.progress} />
                   ) : (
+                    // just added
+                    // <Link to='/' className={classes.link}> 
                     <Button
                       className={classes.signUpButton}
                       color="primary"
@@ -346,6 +332,7 @@ class SignUp extends Component {
                     >
                       Sign up now
                     </Button>
+                    // </Link>
                   )}
                   <Typography
                     className={classes.signIn}
@@ -377,23 +364,23 @@ SignUp.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    signup: (username, fullname, email, password) => dispatch(signup(username, fullname, email, password)),
-    signupClear: () => dispatch(signupClear()),
+      signup : (username,fullname,email,password) => dispatch(signup(username,fullname,email,password)),
+      signupClear : () => dispatch(signupClear()),
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     //  info: state.dashboard.info,
-    isLoading: state.signup.isLoading,
-    hasErrored: state.signup.hasErrored,
-    status: state.signup.status,
-    errorMsg: state.signup.errorMsg
+     isLoading : state.signup.isLoading,
+     hasErrored : state.signup.hasErrored,
+     status: state.signup.status,
+     errorMsg: state.signup.errorMsg
   }
 }
 
 export default compose(
   withRouter,
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps,mapDispatchToProps)
 )(SignUp);

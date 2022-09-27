@@ -1,5 +1,5 @@
-import React, { Component, lazy, Suspense } from 'react';
-import { Router, Route, Navigate } from 'react-router-dom';
+import React, { Component, Suspense  } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Views
 import Dashboard from './views/Dashboard';
@@ -33,43 +33,43 @@ export default class Routes extends Component {
   render() {
     return (
       <Suspense flassback={Loader}>
-        <Router>
-          <Route
-            component={Landing}
-            exact
-            path="/"
-          />
-          <Route
-            component={Help}
-            exact
-            path="/help"
-          />
-          <Route
-            component={About}
-            exact
-            path="/about"
-          />
-          <Route
-            component={Dashboard}
-            exact
-            path="/dashboard"
-          />
-          <Route
-            component={UserList}
-            exact
-            path="/follow"
-          />
-          {/* <Route
+      <Switch>
+        <Route
+          component={Landing}
+          exact
+          path="/"
+        />
+        <Route
+          component={Help}
+          exact
+          path="/help"
+        />
+        <Route
+          component={About}
+          exact
+          path="/about"
+        />
+        <Route
+          component={Dashboard}
+          exact
+          path="/dashboard"
+        />
+        <Route
+          component={UserList}
+          exact
+          path="/follow"
+        />
+        {/* <Route
           component={Explore}
           exact
           path="/explore"
         /> */}
-          <Route
-            component={Courses}
-            exact
-            path="/course"
-          />
-          {/* <Route
+        <Route
+          component={Courses}
+          exact
+          path="/course"
+        />
+        {/* <Route
           component={Typography}
           exact
           path="/typography"
@@ -79,51 +79,51 @@ export default class Routes extends Component {
           exact
           path="/icons"
         /> */}
-          <Route
-            component={Account}
-            exact
-            path="/settings"
-          />
-          <Route
-            component={Settings}
-            exact
-            path="/account"
-          />
-          <Route
-            component={SignUp}
-            exact
-            path="/sign-up"
-          />
-          <Route
-            component={SignIn}
-            exact
-            path="/sign-in"
-          />
-          <Route
-            component={SignOut}
-            exact
-            path="/sign-out"
-          />
-          <Route
-            component={UnderDevelopment}
-            exact
-            path="/under-development"
-          />
-          <Route
-            component={NotFound}
-            exact
-            path="/not-found"
-          />
-          <Route
-            component={Profile}
-            exact
-            path="/user/:user" />
-          {/* <Route
+        <Route
+          component={Account}
+          exact
+          path="/settings"
+        />
+        <Route
+          component={Settings}
+          exact
+          path="/account"
+        />
+        <Route
+          component={SignUp}
+          exact
+          path="/sign-up"
+        />
+        <Route
+          component={SignIn}
+          exact
+          path="/sign-in"
+        />
+        <Route
+          component={SignOut}
+          exact
+          path="/sign-out"
+        />
+        <Route
+          component={UnderDevelopment}
+          exact
+          path="/under-development"
+        />
+        <Route
+          component={NotFound}
+          exact
+          path="/not-found"
+        />
+        <Route
+          component={Profile} 
+          exact
+          path="/user/:user"/>
+        {/* <Route
           component={Course} 
           exact
           path="/course/:course"/> */}
-          <Navigate to="/not-found" />
-        </Router>
+        <Redirect to="/not-found" />
+      </Switch>
       </Suspense>
     );
   }
